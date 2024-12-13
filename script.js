@@ -69,4 +69,4 @@ function game(to_find)
 
 // console.log(colorsAvailable(['Blue', 'Red']));
 // console.log(didWin([1, 2, 3], [2, 3, 1]));
-console.log(game(['Red', 'Blue', 'Black', 'Black']));
+console.log(game(GenerateRandomCombination()));
