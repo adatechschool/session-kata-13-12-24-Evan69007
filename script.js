@@ -32,10 +32,6 @@ function GenerateRandomCombination()
 	for (let i = 0; i < NB_MAX_IN_COMBI; i++)
 	{
 		random_int = Math.round(Math.random() * (NB_MAX_COLORS - 1))
-		while(combination.includes(COLORS[random_int]))
-		{
-			random_int = Math.round(Math.random() * (NB_MAX_COLORS - 1))
-		}
 		combination.push(COLORS[random_int])
 	}
 	return (combination)
@@ -73,4 +69,4 @@ function game(to_find)
 
 // console.log(colorsAvailable(['Blue', 'Red']));
 // console.log(didWin([1, 2, 3], [2, 3, 1]));
-// console.log(game(['Red', 'Blue', 'Black', 'Purple']));
+console.log(game(['Red', 'Blue', 'Black', 'Black']));
