@@ -3,6 +3,42 @@ const NB_MAX_COLORS = COLORS.length
 const NB_MAX_IN_COMBI = 4
 const MAX_GUESSES = 12
 
+const userInput = document.querySelector('#guessInput');
+const startButton = document.querySelector('#start');
+const errorMessage = document.querySelector('#ErrorMessage');
+const endOfGameMessage = document.querySelector('#EndOfGameMessage');
+const validateButton = document.querySelector('#validate');
+const responseGuessVar = document.querySelector('#responseGuess');
+const availableColors = document.querySelector('#AvailableColors');
+const responses = document.querySelector('#Responses');
+
+availableColors.innerHTML = `Couleurs disponibles: ${COLORS}`
+
+let nb_guesses
+let to_find_array
+
+startButton.addEventListener('click', () => {
+	responses.innerHTML = ""
+	endOfGameMessage.innerHTML = ""
+	nb_guesses = 0
+	validateButton.style.display  = 'inline-block'
+	userInput.style.display = 'inline-block'
+	to_find_array = GenerateRandomCombination()
+	console.log(to_find_array);
+})
+
+validateButton.addEventListener('click', () => {
+	let guess = userInput.value
+	userInput.value = ""
+	errorMessage.innerHTML = ""
+	responseGuessVar.innerHTML = ""
+	if (guess && nb_guesses < 12)
+	{
+		let guess_array = guess.split(" ")
+		game(to_find_array, guess_array)
+	}
+})
+
 function colorsAvailable(combination)
 {
 	for (let color of combination)
@@ -72,36 +108,31 @@ function responseGuess(to_find, guess) // Renvoie la réponse du codemaker en fo
 	return (response)
 }
 
-function game(to_find)
+function game(to_find, guess)
 {
-	let nb_guesses = 0
-	let guess
-	do
+	if (colorsAvailable(guess))
 	{
-		guess = GenerateRandomCombination()
-		console.log(guess);
-		if (colorsAvailable(guess))
-		{
-			nb_guesses++
-		}
-		else
-		{
-			console.log('Couleurs Non disponibles, Réessayez');
-		}
-	}
-	while (nb_guesses < MAX_GUESSES && !didWin(to_find, guess));
-	if (didWin(to_find, guess))
-	{
-		console.log('Bravo! Vous avez trouvé la bonne combinaison');
-		return (true)
+		nb_guesses++
 	}
 	else
 	{
-		console.log('Nombre de tentatives maximum atteint');
-		return (false)
+		errorMessage.innerHTML = 'Couleurs Non disponibles ou sans espaces entre chaque couleur, Réessayez'
+		return
+	}
+	if (didWin(to_find, guess))
+	{
+		endOfGameMessage.innerHTML = `Bravo! Vous avez trouvé la bonne combinaison qui était ${to_find}`
+		validateButton.style.display  = 'none'
+		userInput.style.display = 'none'
+	}
+	else if (nb_guesses == 12)
+	{
+		endOfGameMessage.innerHTML = `Nombre de tentatives maximum atteint, la combinaison à trouver était: ${to_find}`
+	}
+	else
+	{
+		let responseArray = responseGuess(to_find, guess)
+		responseGuessVar.innerHTML = `${responseArray[0]} couleurs bien placée(s), ${responseArray[1]} couleurs mal placée(s)`
+		responses.innerHTML += `Guess n°${nb_guesses}: ${guess}, ${responseArray[0]} couleurs bien placée(s), ${responseArray[1]} couleurs mal placée(s) <br>`
 	}
 }
-
-// console.log(colorsAvailable(['Blue', 'Red']));
-// console.log(didWin([1, 2, 3], [2, 3, 1]));
-console.log(game(GenerateRandomCombination()));

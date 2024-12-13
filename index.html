@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Mastermind</title>
+	<link rel="stylesheet" href="style.css">
+	<script defer src="script.js"></script>
+</head>
+<body>
+	<h2> Bienvenue sur le site Mastermind, Règles du Jeu :<br>
+		L'ordinateur va tirer au sort une combinaison de 4 couleurs parmis les couleurs disonibles, 
+		attention la combination peut avoir plusieurs fois la même couleur,
+		vous avez 12 tentatives pour trouver cette combinaison,
+		pour entrer une tentative, entrez une combinaison de 4 couleurs sous la forme "Black Red Green Blue" en utilisant les couleurs disponibles affichés ci-dessous
+	</h2>
+	<h3 id="AvailableColors"></h3>
+	<button id="start">Start a new game</button>
+	<h1 id="EndOfGameMessage"></h1>
+	<p id="ErrorMessage"></p>
+	<input type="text" id="guessInput" placeholder="Entrez 4 Couleurs" style="display: none">
+	<button id="validate" style="display: none">Valider le guess</button>
+	<p id="responseGuess"></p>
+	<p id="Responses"></p>
+</body>
+</html>
