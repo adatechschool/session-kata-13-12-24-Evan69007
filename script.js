@@ -37,6 +37,41 @@ function GenerateRandomCombination()
 	return (combination)
 }
 
+function findColorIndex(array, color)
+{
+	for (let i = 0; i < array.length; i++)
+	{
+		if (array[i] == color)
+		{
+			return (i)
+		}
+	}
+}
+
+function responseGuess(to_find, guess) // Renvoie la réponse du codemaker en fonction du guess
+{
+	let bien_placee = 0
+	let mal_placee = 0
+	let i  = 0
+	let to_find_copy = to_find.slice()
+	for (let color of guess)
+	{
+		if (color == to_find[i])
+		{
+			bien_placee++
+		}
+		else if (to_find_copy.includes(color))
+		{
+			mal_placee++
+			colorIndex = findColorIndex(to_find_copy, color)
+			to_find_copy.splice(colorIndex, 1)
+		}
+		i++
+	}
+	let response = [bien_placee, mal_placee]
+	return (response)
+}
+
 function game(to_find)
 {
 	let nb_guesses = 0
