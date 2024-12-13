@@ -1,6 +1,6 @@
-const COLORS = ['Red', 'Blue', 'Green', 'Yellow']
+const COLORS = ['Red', 'Blue', 'Green', 'Yellow', 'White', 'Black', 'Orange', 'Purple']
 const NB_MAX_COLORS = COLORS.length
-const NB_MAX_IN_COMBI = 2
+const NB_MAX_IN_COMBI = 4
 const MAX_GUESSES = 12
 
 function colorsAvailable(combination)
@@ -25,25 +25,38 @@ function didWin(to_find, guess)
 	return (compareArrays(to_find, guess))
 }
 
+function GenerateRandomCombination()
+{
+	let combination = []
+	let random_int
+	for (let i = 0; i < NB_MAX_IN_COMBI; i++)
+	{
+		random_int = Math.round(Math.random() * (NB_MAX_COLORS - 1))
+		while(combination.includes(COLORS[random_int]))
+		{
+			random_int = Math.round(Math.random() * (NB_MAX_COLORS - 1))
+		}
+		combination.push(COLORS[random_int])
+	}
+	return (combination)
+}
+
 function game(to_find)
 {
 	let nb_guesses = 0
 	let guess
-	let random_int
 	do
 	{
-		guess = []
-		for (let i = 0; i < NB_MAX_IN_COMBI; i++)
-		{
-			random_int = Math.round(Math.random() * (NB_MAX_COLORS - 1))
-			while(guess.includes(COLORS[random_int]))
-			{
-				random_int = Math.round(Math.random() * (NB_MAX_COLORS - 1))
-			}
-			guess.push(COLORS[random_int])
-		}
+		guess = GenerateRandomCombination()
 		console.log(guess);
-		nb_guesses++
+		if (colorsAvailable(guess))
+		{
+			nb_guesses++
+		}
+		else
+		{
+			console.log('Couleurs Non disponibles, Réessayez');
+		}
 	}
 	while (nb_guesses < MAX_GUESSES && !didWin(to_find, guess));
 	if (didWin(to_find, guess))
@@ -60,4 +73,4 @@ function game(to_find)
 
 // console.log(colorsAvailable(['Blue', 'Red']));
 // console.log(didWin([1, 2, 3], [2, 3, 1]));
-console.log(game(['Red', 'Blue']));
+// console.log(game(['Red', 'Blue', 'Black', 'Purple']));
