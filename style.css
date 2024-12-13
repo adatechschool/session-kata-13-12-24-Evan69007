@@ -18,6 +18,10 @@ button {
 	border-radius: 20px;
 }
 
+p {
+	font-size: 20px;
+}
+
 input {
 	background-color: #E9D1A9;
 	font-weight: bold;
